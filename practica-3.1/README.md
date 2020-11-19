@@ -1,0 +1,9 @@
+# MySQL-PHP
+
+Para que funcione se tendrá que cambiar el usuario, la contraseña y el nombre de la base de datos en la linea:
+
+///
+
+de los archivos:
+ 
+ 888

@@ -46,7 +46,7 @@
     </style>
     <?php
     require("./functions.php");
-    $conn = connection("carlos", $_SERVER['MYSQL_CARLOS_PASS'], "world");
+    $conn = connection("carlos", "Aa123456.", "world");
     $res = createQuery($conn,     "SELECT city.Name as 'CityName', country.Name as 'CountryName', country.Code as 'Code' FROM city, country WHERE CountryCode LIKE '$_POST[countryCode]' AND city.CountryCode = country.Code;");
     ?>
 </head>

@@ -1,6 +1,6 @@
 <?php
 require("./functions.php");
-$conn = connection("carlos", $_SERVER['MYSQL_CARLOS_PASS'], "world");
+$conn = connection("carlos", "Aa123456.", "world");
 $insert = "INSERT INTO city VALUES (null, '$_POST[nameCity]', '$_POST[countryCode]', '$_POST[district]', $_POST[population]);";
 $res = mysqli_query($conn, $insert);
 

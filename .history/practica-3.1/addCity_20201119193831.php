@@ -41,7 +41,7 @@
     </style>
     <?php
     require("./functions.php");
-    $conn = connection("carlos", $_SERVER['MYSQL_CARLOS_PASS'], "world");
+    $conn = connection("carlos", $_SERVER['MYSQL_'], "world");
     $res = createQuery($conn, "SELECT DISTINCT Code, `Name` FROM country;");
     ?>
 </head>
