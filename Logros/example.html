@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+DELETE FROM newcate WHERE cate_id='CA002';
+
+UPDATE employees SET email='mary.patterson@classicmodelcars.com' WHERE employeeNumber=1056;
+
+https://www.w3schools.com/sql/sql_injection.asp
+
+/*** CONEXIÓN ***/
+
+function connection() {
+    try {
+        $database = "logros";
+        $user = 'carlos';
+        $pass = 'Aa123456.';
+        $db = new PDO("mysql:host=localhost;dbname=$database", $user, $pass);
+        return $db;
+    } catch (PDOException $e) {
+        print "¡Error!: " . $e->getMessage();
+        die();
+    }
+}
+
+/*** SELECT, INSERT, DELETE AND UPDATE QUERY ***/
+
+function query($db, $sql, $params, $return_status)
+{
+    $query = $db->prepare($sql);
+    for ($i = 0; $i < sizeOf($params); $i++)
+        $query->bindParam($i + 1, $params[$i]);
+    $query->execute();
+    if ($return_status) return $query
+}
+
+$params = [];
+foreach ($_POST as $value)
+    array_push($params, filter_var($value, FILTER_SANITIZE_STRING));
+query($db, "INSERT INTO `Travels`(`name`, `description`, `coin`) VALUES (?, ?, ?);", $params, false);
+
+
+/*** SELECT QUERY RETURN FIRST ROW ***/
+
+$travel = $new_travel->fetch();
+
+
+/*** OBTENER EL ÚLTIMO ID INSERTADO ***/
+
+$id_travel = $db->lastInsertId();
+
+
+/*** ITERAR UN SELECT ***/
+
+foreach ($table_rows as $row) {
+    print_r($row);
+}
+    </pre>
+</body>
+
+</html>

@@ -52,11 +52,45 @@
         input[type="submit"] {
             margin-top: 20px;
         }
+
+        .sql {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-weight: bold;
+        }
     </style>
+    <?php
+    try {
+        $hostname = "localhost";
+        $dbname = "users";
+        $username = "carlos";
+        $pass = $_SERVER['MYSQL_CARLOS_PASS'];
+        $conn = new PDO("mysql:host=$hostname;dbname=$dbname", "$username", "$pass");
+    } catch (PDOException $e) {
+        echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+        exit;
+    }
+
+    $sql = "";
+    if (isset($_POST['login'])) {
+        // $sql = "SELECT * FROM `usuaris` WHERE `username` = ? AND `password`=sha2(':db_pass', 512);";
+        $sql = "SELECT * FROM `usuaris` WHERE `username` = :db_user AND `password`=sha2( :db_pass , 512);";
+
+        $query = $conn->prepare($sql);
+        $query->execute(array(':db_user' => $_POST['user']));
+        $query->execute(array(':db_pass' => $_POST['pass']));
+        $row = $query->fetchAll();
+    }
+
+    ?>
 </head>
 
 <body>
-    <form action="./checkUser.php" method="post" autocomplete="false">
+    <p class="sql"><?= $sql ?></p>
+    <form action="./login-seguro.php" method="post" autocomplete="false">
         <label for="user">Username:</label>
         <input type="text" required name="user">
         <label for="pass">Password:</label>
@@ -64,10 +98,10 @@
         <input type="submit" value="Log in" name="login">
     </form>
     <?php
-    if (isset($_GET['status'])) {
-        if ($_GET['status'] == 'success')
+    if (isset($_POST['login'])) {
+        if ($row)
             echo "<div class='alert alert-success'<strong>Sesion iniciada correctamente.</strong></div>";
-        else if ($_GET['status'] == 'error')
+        else if (!$row)
             echo "<div class='alert alert-danger'><strong>Usuario no encontrado.</strong></div>";
         echo "<script>setTimeout(() => {document.getElementsByClassName('alert')[0].style.display = 'none'}, 4000);</script>";
     }
